@@ -15,13 +15,13 @@ type hashRing struct {
 	replica int
 }
 
-func (h *hashRing) Do(opts ...selector.SelectOption) selector.Next {
+func (h *hashRing) Do(nds []registry.Node, opts ...selector.SelectOption) selector.Next {
 	return func() (node registry.Node, e error) {
 		return nil, fmt.Errorf("not support")
 	}
 }
 
-func (h *hashRing) DoA(opts ...selector.SelectOption) registry.Node {
+func (h *hashRing) DoA(nds []registry.Node, opts ...selector.SelectOption) registry.Node {
 	var op selector.SelectOptions
 	for _, o := range opts {
 		o(&op)
@@ -29,6 +29,12 @@ func (h *hashRing) DoA(opts ...selector.SelectOption) registry.Node {
 
 	name := op.Name
 	key := op.Key
+
+	if len(nds) > 0 {
+		for i := range nds {
+			h.Mark(name, nds[i], nil)
+		}
+	}
 
 	h.RLock()
 	c := h.rings[name]

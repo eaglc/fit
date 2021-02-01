@@ -9,13 +9,13 @@ import (
 type hash struct {
 }
 
-func (h *hash) Do(opts ...selector.SelectOption) selector.Next {
+func (h *hash) Do(nds []registry.Node, opts ...selector.SelectOption) selector.Next {
 	return func() (node registry.Node, e error) {
 		return nil, fmt.Errorf("not support")
 	}
 }
 
-func (h *hash) DoA(opts ...selector.SelectOption) registry.Node {
+func (h *hash) DoA(nds []registry.Node, opts ...selector.SelectOption) registry.Node {
 	return nil
 }
 

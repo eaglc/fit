@@ -14,7 +14,7 @@ type roundBin struct {
 	off   map[string]*uint32
 }
 
-func (r *roundBin) Do(opts ...selector.SelectOption) selector.Next {
+func (r *roundBin) Do(nds []registry.Node, opts ...selector.SelectOption) selector.Next {
 	var op selector.SelectOptions
 	for _, o := range opts {
 		o(&op)
@@ -41,17 +41,20 @@ func (r *roundBin) Do(opts ...selector.SelectOption) selector.Next {
 	}
 }
 
-func (r *roundBin) DoA(opts ...selector.SelectOption) registry.Node {
+func (r *roundBin) DoA(nds []registry.Node, opts ...selector.SelectOption) registry.Node {
 	var op selector.SelectOptions
 	for _, o := range opts {
 		o(&op)
 	}
 
 	name := op.Name
+	nodes := nds
 
-	r.RLock()
-	nodes := r.nodes[name]
-	r.RUnlock()
+	if len(nodes) == 0 {
+		r.RLock()
+		nodes = r.nodes[name]
+		r.RUnlock()
+	}
 
 	if len(nodes) == 0 {
 		return nil
