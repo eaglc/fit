@@ -24,7 +24,7 @@ func (h *hash) Mark(name string, node registry.Node, err error) {
 }
 
 func (h *hash) String() string {
-	return "hashring"
+	return "hash"
 }
 
 func NewHash() selector.Strategy {
