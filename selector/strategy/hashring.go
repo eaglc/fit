@@ -91,6 +91,7 @@ func (h *hashRing) String() string {
 func NewHashRing(replica int) selector.Strategy {
 	return &hashRing{
 		rings:   make(map[string]*consistent.Consistent),
+		nodes:   make(map[string]registry.Node),
 		replica: replica,
 	}
 }
