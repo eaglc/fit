@@ -74,10 +74,10 @@ func (h *hashRing) Mark(name string, node registry.Node, err error) {
 	h.Lock()
 	if err == nil {
 		c.Add(node.Addr())
-		delete(h.nodes, node.Addr())
+		h.nodes[node.Addr()] = node
 	} else {
 		c.Remove(node.Addr())
-		h.nodes[node.Addr()] = node
+		delete(h.nodes, node.Addr())
 	}
 	h.rings[name] = c
 
