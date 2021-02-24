@@ -2,6 +2,11 @@ module github.com/eaglc/fit/registry/etcd
 
 go 1.14
 
+replace (
+	github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.5
+	google.golang.org/grpc => google.golang.org/grpc v1.26.0
+)
+
 require (
 	github.com/coreos/bbolt v1.3.5 // indirect
 	github.com/coreos/etcd v3.3.25+incompatible // indirect
@@ -11,7 +16,3 @@ require (
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
 	google.golang.org/grpc v1.34.1 // indirect
 )
-
-replace github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.5
-
-replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
